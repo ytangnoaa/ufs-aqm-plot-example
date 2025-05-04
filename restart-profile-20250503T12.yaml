@@ -1,0 +1,18 @@
+filelist: "data/20250503/*202505*.fv_tracer.res.tile1.nc"
+corefiles: "data/20250503/*202505*.fv_core.res.tile1.nc"
+gridfile: C793_oro_data.tile7.halo0.nc
+tstart: '20250503T18'
+tend: '20250506T06'
+tfmt: '%Y%m%dT%H'
+tstep: 6
+case_name: 'naqfc'
+figfolder: figures/20250503
+modnames: ['o3','no2','co','eth','aecj']
+ceiling: 5000
+locations:
+   New_York_City: [40.7128, -74.0060]
+   Washington_DC: [38.9072, -77.0369]
+   HRG_Airport: [39.7054, -77.7310]
+   Baltimore: [39.2905, -76.6104]
+   SW_Marcellus: [39.7241, -80.5212]
+   Lancaster_PA: [40.0403, -76.3042]

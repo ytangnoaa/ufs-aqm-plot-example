@@ -1,0 +1,11 @@
+input_filename: data/20240707/aqm.t12z.chem_sfc.nc
+tstart: '20240707T13'
+tend: '20240710T12'
+tfmt: '%Y%m%dT%H'
+tstep: 12
+case_name: 'naqfc'
+parea: [ 150, 320, 7, 85 ]
+figfolder: figures/20240707
+modnames: ['o3','PM25_TOT']
+valueint: [ [20,30,40,45,50,55,60,70,80,100,120], 
+            [2, 3, 5, 10, 20, 30, 40, 60, 100, 200]] 

@@ -1,0 +1,13 @@
+filelist: "data/20250407/*.fv_tracer.res.tile1.nc"
+gridfile: C793_oro_data.tile7.halo0.nc
+tstart: '20250407T12'
+tend: '20250410T00'
+tfmt: '%Y%m%dT%H'
+tstep: 6
+case_name: 'naqfc'
+parea: [ 150, 320, 7, 85 ]
+figfolder: figures/20250407
+modnames: ['co','eth','aecj']
+valueint: [ [ 90, 100, 120, 150, 180, 210, 250, 300, 400, 800], 
+            [ 0.4, 0.6,  1, 1.5, 2, 3, 5, 10, 20, 50],
+            [0.1,0.2,0.3,0.5,1,2,3,5,7,10,20]] 
