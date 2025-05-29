@@ -90,7 +90,7 @@ ncores=len(corefiles)
 print('corefiles=',corefiles)
 
 if nlines != ncores:
-  print('inconsistent tracer file and core file lists ',tracer_file,corefiles)
+  print('inconsistent tracer file and core file lists ',nlines, ncores, tracer_file,corefiles)
   sys.exit(1)
 
 stime={}
@@ -155,10 +155,20 @@ while ftstart <= ftend:
        conv=1000
      elif cvar in sp_aero:
        cunits='$\mu$g/m$^3$' # '$\mu$g/kg' 
+   elif cvar == 'nox':
+      cunits='ppbV'
+      conv=1000
    else:
       print('cat not find ',cvar)   
 
 # locations loop
+   if cvar == 'nox':
+     conc=ftracer['no']+ftracer['no2']
+     clabel='NOx'
+   else:
+     conc=ftracer[cvar]
+     clabel=cvar.upper()
+
    top_index=[]
    for nloc in range(len(locations)):
      dz=-fcore['DZ'][0,::-1,ys[nloc],xs[nloc]] # inverse the dz to bottom-up
@@ -173,20 +183,23 @@ while ftstart <= ftend:
      
      dens=p_center/(287.058*fcore['T'][0,::-1,ys[nloc],xs[nloc]]) # air density in kg/m3
      if cvar in sp_aero:
-       conv=dens
+       conv2=dens
+     else:
+       conv2=conv
+
      try:
-      plt.plot(ftracer[cvar][0,::-1,ys[nloc],xs[nloc]].values*conv,altitude_center,label=loc_names[nloc])
+       plt.plot(conc[0,::-1,ys[nloc],xs[nloc]].values*conv2,altitude_center,label=loc_names[nloc],linewidth=5)
      except:
-      print(cvar,ftracer[cvar].shape,(ftracer[cvar][0,:,ys[nloc],xs[nloc]].values).shape,altitude_center.shape)
-      sys.exit(1)
+       print(cvar,ftracer[cvar].shape,(ftracer[cvar][0,:,ys[nloc],xs[nloc]].values).shape,altitude_center.shape)
+       sys.exit(1)
       
 #   print('max of top_index=',max(top_index))
    plt.ylim(0,ceiling)
-   plt.xlim(0,(ftracer[cvar][0,-max(top_index):-1,ys[:],xs[:]]*conv).max())
-   plt.xlabel('Predicted '+cvar+' ('+cunits+')',fontsize=16)
+   plt.xlim(0,(conc[0,-max(top_index):-1,ys[:],xs[:]]*conv).max())
+   plt.xlabel('Predicted '+clabel+' ('+cunits+')',fontsize=16)
    plt.ylabel('Altitude Above Sea Level (m)')
-   plt.legend()
-   plt.title(case+' Predicted '+cvar+' at '+ctstring)
+   plt.legend(fontsize='large')
+   plt.title(case+' Predicted '+clabel+' at '+ctstring)
    plt.tight_layout()
    plt.savefig(figfolder+'/profile_'+cvar+'_'+case+'_'+ctstring+'.png',dpi=300)
    plt.clf()

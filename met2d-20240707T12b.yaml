@@ -1,0 +1,14 @@
+input_filename: "data/20240707/aqm.t12z.phy.f0*.nc"
+tstart: '20240707T13'
+tend: '20240710T12'
+tfmt: '%Y%m%dT%H'
+tstep: 3
+case_name: 'naqfc2'
+parea: [ 273, 292, 34, 45 ]
+barb_yn : True
+barb_skip : 10
+figfolder: figures/20240707
+modnames: ['tmp2m','hpbl','aod']
+valueint: [ [260,270,280,285,290,295,300,305,310,315,320], 
+            [ 30, 50, 100, 200, 300, 400, 500, 700, 1000, 1500,2000, 3000, 5000],
+            [0.1,0.2,0.3,0.5,0.7,1,1.5,2,3,4,5]] 

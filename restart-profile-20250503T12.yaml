@@ -1,4 +1,4 @@
-filelist: "data/20250503/*202505*.fv_tracer.res.tile1.nc"
+filelist: "data/20250503/2025*.fv_tracer.res.tile1.nc"
 corefiles: "data/20250503/*202505*.fv_core.res.tile1.nc"
 gridfile: C793_oro_data.tile7.halo0.nc
 tstart: '20250503T18'
@@ -7,7 +7,7 @@ tfmt: '%Y%m%dT%H'
 tstep: 6
 case_name: 'naqfc'
 figfolder: figures/20250503
-modnames: ['o3','no2','co','eth','aecj']
+modnames: ['o3','nox','co','etha','aecj']
 ceiling: 5000
 locations:
    New_York_City: [40.7128, -74.0060]

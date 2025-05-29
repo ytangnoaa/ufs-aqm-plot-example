@@ -125,20 +125,29 @@ while ftstart <= ftend:
        conv=1000
      elif cvar in sp_aero:
        cunits='$\mu$g/kg'
+   elif cvar == 'nox':
+      cunits='ppbV'
+      conv=1000
    else:
       print('cat not find ',cvar)   
 
    cint=valueint[m]
+   if cvar == 'nox':
+     conc=(ftracer['no'][0,-1,:,:]+ftracer['no2'][0,-1,:,:])*conv
+     clabel='NOx'
+   else:
+     conc=ftracer[cvar][0,-1,:,:]*conv
+     clabel=cvar.upper()
    
    ax=plt.axes(projection=cproj)
    ax.set_extent(parea, cproj)
    plt.subplots_adjust(wspace=0.6,hspace=0.4)
    
-   plt.pcolormesh(geolon,geolat,ftracer[cvar][0,-1,:,:]*conv,cmap='jet',transform=ccrs.PlateCarree(),norm=colors.BoundaryNorm(boundaries=myvalues,ncolors=256))
+   plt.pcolormesh(geolon,geolat,conc,cmap='jet',transform=ccrs.PlateCarree(),norm=colors.BoundaryNorm(boundaries=myvalues,ncolors=256))
 
    cbar=plt.colorbar(fraction=0.07,orientation='horizontal')
-   cbar.set_label('Surface '+cvar+' ('+cunits+')',fontsize=16)
-   plt.title(case+' Predicted '+cvar+' at '+ctstring)
+   cbar.set_label('Surface '+clabel+' ('+cunits+')',fontsize=16)
+   plt.title(case+' Predicted '+clabel+' at '+ctstring)
    ax.add_feature(cfeature.BORDERS)
    ax.add_feature(cfeature.COASTLINE)
    ax.add_feature(states_provinces, edgecolor='gray')

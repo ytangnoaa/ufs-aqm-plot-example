@@ -95,9 +95,11 @@ while ftstart <= ftend:
       a['ugrd10m'].loc[ctstring,::barb_skip,::barb_skip].values.squeeze(),
       a['vgrd10m'].loc[ctstring,::barb_skip,::barb_skip].values.squeeze(),
       color='k', length=5, transform=ccrs.PlateCarree())
+
+   clabel=cvar.upper()
    cbar=plt.colorbar(fraction=0.07,orientation='horizontal')
-   cbar.set_label(cvar+' ('+cunits+')',fontsize=16)
-   plt.title(case+' Predicted '+cvar+' at '+ctstring)
+   cbar.set_label(clabel+' ('+cunits+')',fontsize=16)
+   plt.title(case+' Predicted '+clabel+' at '+ctstring)
    ax.add_feature(cfeature.BORDERS)
    ax.add_feature(cfeature.COASTLINE)
    ax.add_feature(states_provinces, edgecolor='gray')

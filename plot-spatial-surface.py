@@ -82,22 +82,31 @@ while ftstart <= ftend:
        conv=1000
      elif 'ug/m3' in cunits:
        cunits='$\mu$g/m$^3$'
+   elif cvar == 'nox' :
+     cunits='ppbV'
+     conv=1.
    else:
       print('cat not find ',cvar)
    
    cint=valueint[m]
+   if cvar == 'nox' :
+     conc=(a['no']+a['no2']).squeeze().loc[ctstring,:,:].values.squeeze()*conv
+     clabel='NOx'
+   else:
+     conc=a[cvar].squeeze().loc[ctstring,:,:].values.squeeze()*conv
+     clabel=cvar.upper()
 
    cproj=ccrs.PlateCarree(central_longitude=clon)
    ax=plt.axes(projection=cproj)
    ax.set_extent(parea, cproj)
    plt.subplots_adjust(wspace=0.6,hspace=0.4)
    
-   plt.pcolormesh(geolon,geolat,a[cvar].squeeze().loc[ctstring,:,:].values.squeeze()*conv,
+   plt.pcolormesh(geolon,geolat,conc,
     cmap='jet',transform=ccrs.PlateCarree(),norm=colors.BoundaryNorm(boundaries=myvalues,ncolors=256))
-   
+
    cbar=plt.colorbar(fraction=0.07,orientation='horizontal')
-   cbar.set_label('Surface '+cvar+' ('+cunits+')',fontsize=16)
-   plt.title(case+' Predicted '+cvar+' at '+ctstring)
+   cbar.set_label('Surface '+clabel+' ('+cunits+')',fontsize=16)
+   plt.title(case+' Predicted '+clabel+' at '+ctstring)
    ax.add_feature(cfeature.BORDERS)
    ax.add_feature(cfeature.COASTLINE)
    ax.add_feature(states_provinces, edgecolor='gray')
